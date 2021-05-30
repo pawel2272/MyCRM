@@ -1,0 +1,24 @@
+﻿
+@model ContactDto
+
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Contact details:</h2>
+        <p>ID: @Model.Id</p>
+        <p>Name: @Model.FirstName @Model.LastName</p>
+        <p>Phone: @Model.Phone</p>
+        <p>Email: @Model.Email</p>
+        <p>Address:<br>@Model.Street<br>@Model.PostalCode, @Model.City</p>
+        <p>
+            <u:nl2br>@Model.ContactComment</u:nl2br>
+        </p>
+    </div>
+    @await Component.InvokeAsync("OrderList", new { query = new SearchOrdersQuery() { ContactId = Model.Id, PageNumber = 1, PageSize = 10, SortDirection = SortDirection.ASC, OrderBy = "Title" } })
+    @await Component.InvokeAsync("TodoList", new { query = new SearchTodosQuery() { ContactId = Model.Id, PageNumber = 1, PageSize = 10, SortDirection = SortDirection.ASC, OrderBy = "Title" } })
+</div>
+

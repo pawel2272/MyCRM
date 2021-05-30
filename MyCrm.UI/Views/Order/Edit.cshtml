@@ -1,0 +1,42 @@
+﻿
+@model OrderDto
+
+@{
+    ViewBag.Title = "EditOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Edit order
+            </div>
+            <div class="panel-body">
+                <form method="post" asp-controller="Order" asp-action="Edit">
+                    <input type="hidden" name="id" asp-for="Id" />
+                    <input type="hidden" name="contactId" asp-for="ContactId" />
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" placeholder="Title" name="title" class="form-control" asp-for="Title" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea placeholder="Content.." name="content" class="form-control" asp-for="Content"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default" value="Save" />
+                        <a class="btn btn-default" asp-controller="Contact" asp-action="Show" asp-route-id="@Model.ContactId">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+

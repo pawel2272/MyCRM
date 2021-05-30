@@ -1,0 +1,33 @@
+﻿
+@model OrderPageResult<OrderDto>
+
+<div class="col-md-6">
+    <p><h3>Orders</h3></p>
+    <table border="1" cellpadding="5" cellspacing="1" class="table table-bordered">
+        <tr>
+            <th width="60" tyle="text-align: center">ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th width="60" style="text-align: center">Edit</th>
+            <th width="60" style="text-align: center">Delete</th>
+        </tr>
+        @foreach (var order in Model.Items)
+        {
+            <tr>
+                <td tyle="text-align: center">@order.Id</td>
+                <td style="word-wrap: break-word;">@order.Title</td>
+                <td>
+                    <u:nl2br>@order.Content</u:nl2br>
+                </td>
+                <td>
+                    <a class="btn btn-default btn-sm" asp-controller="Order" asp-action="Edit" asp-route-id="@order.Id">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger btn-sm" asp-controller="Order" asp-action="Delete" asp-route-id="@order.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <a class="btn btn-success btn-lg" asp-controller="Order" asp-action="Add" asp-route-contactId="@Model.ContactId">Add order</a>
+</div>

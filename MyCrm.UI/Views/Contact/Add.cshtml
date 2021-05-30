@@ -1,0 +1,69 @@
+﻿
+@model AddContactCommand
+
+@{
+    ViewBag.Title = "CreateContact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Edit Contact
+            </div>
+            <div class="panel-body">
+                <form method="post" asp-controller="Contact" asp-action="Add">
+                    <div class="form-group">
+                        <label asp-for="FirstName">First Name</label>
+                        <input type="text" asp-for="FirstName" placeholder="First Name" name="firstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName">Last Name</label>
+                        <input type="text" asp-for="LastName" placeholder="Last Name" name="lastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone">Phone</label>
+                        <input type="text" asp-for="Phone" placeholder="Phone" name="phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email">E-mail</label>
+                        <input type="text" asp-for="Email" placeholder="E-mail" name="email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Street">Street</label>
+                        <input type="text" asp-for="Street" placeholder="Street" name="street" class="form-control" />
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostalCode">Postal Code</label>
+                        <input type="text" asp-for="PostalCode" placeholder="Postal Code" name="postalCode" class="form-control" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City">City</label>
+                        <input type="text" asp-for="City" placeholder="City" name="city" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactComment">Treść</label>
+                        <textarea asp-for="ContactComment" type="text" placeholder="Comment..." name="contactComment" class="form-control"></textarea>
+                        <span asp-validation-for="ContactComment" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default" value="Save" />
+                        <a class="btn btn-default" asp-controller="Contact" asp-action="List">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>

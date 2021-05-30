@@ -1,0 +1,33 @@
+﻿
+@model TodoPageResult<TodoDto>
+
+<div class="col-md-6">
+    <p><h3>Tasks</h3></p>
+    <table border="1" cellpadding="5" cellspacing="1" class="table table-bordered">
+        <tr>
+            <th width="60" tyle="text-align: center">ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th width="60" style="text-align: center">Edit</th>
+            <th width="60" style="text-align: center">Delete</th>
+        </tr>
+        @foreach (TodoDto todo in Model.Items)
+        {
+            <tr>
+                <td tyle="text-align: center">@todo.Id</td>
+                <td style="word-wrap: break-word;">@todo.Title</td>
+                <td>
+                    <u:nl2br>@todo.Content</u:nl2br>
+                </td>
+                <td>
+                    <a class="btn btn-default btn-sm" asp-controller="Todo" asp-action="Edit" asp-route-id="@todo.Id">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger btn-sm" asp-controller="Todo" asp-action="Delete" asp-route-id="@todo.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <a class="btn btn-success btn-lg" asp-controller="Todo" asp-action="Add" asp-route-contactId="@Model.ContactId">Add task</a>
+</div>
