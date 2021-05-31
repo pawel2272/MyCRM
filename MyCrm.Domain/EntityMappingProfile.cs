@@ -13,62 +13,57 @@ namespace MyCrm.Domain
     {
         public void CreateMapForContact()
         {
-            CreateMap<Contact, ContactDto>();
-            CreateMap<ContactDto, Contact>();
+            CreateMap<Contact, ContactDto>().ReverseMap();
 
-            CreateMap<Contact, AddContactCommand>();
-            CreateMap<AddContactCommand, Contact>();
+            CreateMap<Contact, AddContactCommand>().ReverseMap();
+            CreateMap<ContactDto, AddContactCommand>().ReverseMap();
 
-            CreateMap<Contact, EditContactCommand>();
-            CreateMap<EditContactCommand, Contact>();
+            CreateMap<Contact, EditContactCommand>().ReverseMap();
+            CreateMap<ContactDto, EditContactCommand>().ReverseMap();
         }
 
         public void CreateMapForOrder()
         {
-            CreateMap<Order, OrderDto>();
-            CreateMap<OrderDto, Order>();
+            CreateMap<Order, OrderDto>().ReverseMap();
 
-            CreateMap<Order, AddOrderCommand>();
-            CreateMap<AddOrderCommand, Order>();
+            CreateMap<Order, AddOrderCommand>().ReverseMap();
+            CreateMap<OrderDto, AddOrderCommand>().ReverseMap();
 
-            CreateMap<Order, EditOrderCommand>();
-            CreateMap<EditOrderCommand, Order>();
+            CreateMap<Order, EditOrderCommand>().ReverseMap();
+            CreateMap<OrderDto, EditOrderCommand>().ReverseMap();
         }
 
         public void CreateMapForRole()
         {
-            CreateMap<Role, RoleDto>();
-            CreateMap<RoleDto, Role>();
+            CreateMap<Role, RoleDto>().ReverseMap();
 
-            CreateMap<Role, AddRoleCommand>();
-            CreateMap<AddRoleCommand, Role>();
+            CreateMap<Role, AddRoleCommand>().ReverseMap();
+            CreateMap<RoleDto, AddRoleCommand>().ReverseMap();
 
-            CreateMap<Role, EditRoleCommand>();
-            CreateMap<EditRoleCommand, Role>();
+            CreateMap<Role, EditRoleCommand>().ReverseMap();
+            CreateMap<RoleDto, EditRoleCommand>().ReverseMap();
         }
 
         public void CreateMapForTodo()
         {
-            CreateMap<Todo, TodoDto>();
-            CreateMap<TodoDto, Todo>();
+            CreateMap<Todo, TodoDto>().ReverseMap();
 
-            CreateMap<Todo, AddTodoCommand>();
-            CreateMap<AddTodoCommand, Todo>();
+            CreateMap<Todo, AddTodoCommand>().ReverseMap();
+            CreateMap<TodoDto, AddTodoCommand>().ReverseMap();
 
-            CreateMap<Todo, EditTodoCommand>();
-            CreateMap<EditTodoCommand, Todo>();
+            CreateMap<Todo, EditTodoCommand>().ReverseMap();
+            CreateMap<TodoDto, EditTodoCommand>().ReverseMap();
         }
 
         public void CreateMapForUser()
         {
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
+            CreateMap<User, UserDto>().ReverseMap();
 
-            CreateMap<User, AddUserCommand>();
-            CreateMap<AddUserCommand, User>();
+            CreateMap<User, AddUserCommand>().ReverseMap();
+            CreateMap<UserDto, AddUserCommand>().ReverseMap();
 
-            CreateMap<User, EditUserCommand>();
-            CreateMap<EditUserCommand, User>();
+            CreateMap<User, EditUserCommand>().ReverseMap();
+            CreateMap<UserDto, EditUserCommand>().ReverseMap();
         }
 
         public EntityMappingProfile()

@@ -2,13 +2,17 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Threading.Tasks;
+using MyCrm.Domain.Repositories;
 
 namespace MyCrm.UI.Filters
 {
     public class JwtAuthFilter : IAsyncActionFilter
     {
-        public JwtAuthFilter()
+        private readonly IUnitOfWork _unitOfWork;
+
+        public JwtAuthFilter(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         private CookieBuilder CreateAuthorizationCookie(double time)
@@ -26,7 +30,7 @@ namespace MyCrm.UI.Filters
         {
             await next();
 
-            if (!context.HttpContext.User.Identity.IsAuthenticated /* && !await _tokenManager.IsCurrentActiveToken() */)
+            if (!context.HttpContext.User.Identity.IsAuthenticated && !await _unitOfWork.TokenRepository.IsCurrentActiveToken())
             {
                 context.HttpContext.Response.Cookies.Delete("Authorization");
                 CookieBuilder cookie = CreateAuthorizationCookie(-60);

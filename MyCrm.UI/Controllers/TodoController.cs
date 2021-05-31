@@ -10,6 +10,7 @@ using MyCrm.Domain.Command.Todo;
 using MyCrm.Domain.Enums;
 using MyCrm.Domain.Query.Contact;
 using MyCrm.Domain.Query.Todo;
+using MyCrm.Infrastructure;
 using MyCrm.UI.Filters;
 
 namespace MyCrm.UI.Controllers
@@ -40,6 +41,7 @@ namespace MyCrm.UI.Controllers
             var result = await _mediator.CommandAsync(command);
             if (result.IsFailure)
             {
+                ModelState.PopulateValidation(result.Errors);
                 return View(command);
             }
 
@@ -52,7 +54,7 @@ namespace MyCrm.UI.Controllers
             var result = await _mediator.CommandAsync(command);
             if (!result.IsSuccess)
             {
-                ViewData["Error"] = result.Message;
+                ModelState.PopulateValidation(result.Errors);
             }
 
             return RedirectToAction("Show", "Contact");
@@ -71,6 +73,7 @@ namespace MyCrm.UI.Controllers
             var result = await _mediator.CommandAsync(command);
             if (!result.IsSuccess)
             {
+                ModelState.PopulateValidation(result.Errors);
                 return View(command);
             }
 

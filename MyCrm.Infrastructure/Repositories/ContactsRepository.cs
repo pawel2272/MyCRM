@@ -32,7 +32,7 @@ namespace MyCrm.Infrastructure.Repositories
 
         public async Task<Contact> GetAsync(Guid id)
         {
-            var contact = await _dbContext.Contacts.FirstOrDefaultAsync(c => c.Id == id);
+            var contact = await _dbContext.Contacts.FirstOrDefaultAsync(c => c.Id.Equals(id));
             return contact;
         }
 

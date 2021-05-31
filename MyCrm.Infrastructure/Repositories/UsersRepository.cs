@@ -37,7 +37,7 @@ namespace MyCrm.Infrastructure.Repositories
 
         public async Task<User> GetAsync(Guid id)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
             return user;
         }
 
@@ -121,6 +121,7 @@ namespace MyCrm.Infrastructure.Repositories
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.JwtKey));

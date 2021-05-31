@@ -7,6 +7,7 @@ using AutoMapper;
 using MyCrm.Domain;
 using MyCrm.Domain.Command.Order;
 using MyCrm.Domain.Query.Order;
+using MyCrm.Infrastructure;
 using MyCrm.UI.Filters;
 
 namespace MyCrm.UI.Controllers
@@ -37,6 +38,7 @@ namespace MyCrm.UI.Controllers
             var result = await _mediator.CommandAsync(command);
             if (result.IsFailure)
             {
+                ModelState.PopulateValidation(result.Errors);
                 return View(command);
             }
 
@@ -49,7 +51,7 @@ namespace MyCrm.UI.Controllers
             var result = await _mediator.CommandAsync(command);
             if (!result.IsSuccess)
             {
-                ViewData["Error"] = result.Message;
+                ModelState.PopulateValidation(result.Errors);
             }
 
             return RedirectToAction("Show", "Contact");
@@ -69,6 +71,7 @@ namespace MyCrm.UI.Controllers
             var result = await _mediator.CommandAsync(command);
             if (!result.IsSuccess)
             {
+                ModelState.PopulateValidation(result.Errors);
                 return View(command);
             }
 

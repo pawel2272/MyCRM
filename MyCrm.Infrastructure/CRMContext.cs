@@ -131,6 +131,14 @@ namespace MyCrm.Infrastructure
                     .HasConstraintName("FK_Todos_Contacts");
             });
 
+            
+            
+            
+            
+            
+            
+            
+            
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -73,11 +75,11 @@ namespace MyCrm.UI.Controllers
 
         [ServiceFilter(typeof(JwtAuthFilter))]
         [Authorize]
-        [HttpGet]
         [ResponseCache(Duration = 1200, Location = ResponseCacheLocation.Client)]
-        public async Task<ActionResult> Info(Guid id)
+        public async Task<ActionResult> Info()
         {
-            var user = await _mediator.QueryAsync(new GetUserQuery(id));
+            var userId = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var user = await _mediator.QueryAsync(new GetUserQuery(userId));
             return View(user);
         }
     }

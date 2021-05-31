@@ -19,7 +19,7 @@ namespace MyCrm.Domain.Query.User
 
         public async Task<UserDto> HandleAsync(GetUserQuery query)
         {
-            var user = await _unitOfWork.ContactsRepository.GetAsync(query.Id);
+            var user = await _unitOfWork.UsersRepository.GetAsync(query.Id);
 
             if (user == null)
             {

@@ -30,11 +30,11 @@ namespace MyCrm.Infrastructure
 
         public async Task<TResponse> QueryAsync<TResponse>(IQuery<TResponse> query)
         {
-            return (TResponse)GetType()
+            return await (Task<TResponse>)GetType()
                 .GetMethods()
                 .First(x => x.Name.Equals("QueryAsync") && x.GetGenericArguments().Length == 2)
                 .MakeGenericMethod(query.GetType(), typeof(TResponse))
-                .Invoke(this, new object[] {query});
+                .Invoke(this, new object[] { query });
         }
 
         public async Task<TResponse> QueryAsync<TQuery, TResponse>(TQuery query) where TQuery : IQuery<TResponse>

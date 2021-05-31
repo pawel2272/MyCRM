@@ -7,7 +7,6 @@ using MyCrm.Domain.Command;
 using MyCrm.Domain.Command.Contact;
 using MyCrm.Domain.Entities;
 using MyCrm.Domain.Query;
-using MyCrm.Domain.Query.Dto;
 
 namespace MyCrm.Infrastructure
 {

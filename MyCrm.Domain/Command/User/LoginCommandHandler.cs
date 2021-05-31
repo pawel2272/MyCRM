@@ -25,7 +25,7 @@ namespace MyCrm.Domain.Command.User
             var token = await _unitOfWork.UsersRepository.LoginAsync(command.Username, command.Password, command.RememberMe);
             if (string.IsNullOrEmpty(token))
             {
-                return Result.Fail("User does not exist.");
+                return Result.Fail("Invalid username or password.");
             }
 
             return new Result(true, token, Enumerable.Empty<Result.Error>());

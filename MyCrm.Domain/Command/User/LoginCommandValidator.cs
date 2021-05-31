@@ -9,9 +9,7 @@ namespace MyCrm.Domain.Command.User
             RuleFor(x => x.Username)
                 .NotEmpty();
             RuleFor(x => x.Password)
-                .NotEmpty()
-                .MinimumLength(8)
-                .MaximumLength(48);
+                .NotEmpty();
         }
     }
 }
