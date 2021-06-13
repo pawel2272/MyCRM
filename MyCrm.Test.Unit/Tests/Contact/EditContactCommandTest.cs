@@ -10,7 +10,7 @@ using MyCrm.Domain.Repositories;
 using NSubstitute;
 using Xunit;
 
-namespace MyCrm.Test.Unit
+namespace MyCrm.Test.Unit.Tests.Contact
 {
     public class EditContactCommandTest
     {
@@ -35,7 +35,7 @@ namespace MyCrm.Test.Unit
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(command.Id).Returns(new Contact());
+                unitOfWorkSubstitute.ContactsRepository.GetAsync(command.Id).Returns(new Domain.Entities.Contact());
 
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
 
@@ -56,7 +56,7 @@ namespace MyCrm.Test.Unit
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(command.Id).Returns(new Contact());
+                unitOfWorkSubstitute.ContactsRepository.GetAsync(command.Id).Returns(new Domain.Entities.Contact());
 
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
 

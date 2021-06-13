@@ -11,7 +11,7 @@ using MyCrm.Domain.Repositories;
 using NSubstitute;
 using Xunit;
 
-namespace MyCrm.Test.Unit
+namespace MyCrm.Test.Unit.Tests.Contact
 {
     public class SearchContactQueryTest
     {
@@ -21,8 +21,8 @@ namespace MyCrm.Test.Unit
             using (var sut = new SystemUnderTest())
             {
                 var contact = sut.CreateContact();
-                var contacts = new List<Contact>() { contact };
-                var pageResult = new ContactPageResult<Contact>(contacts, 1, 10, 1);
+                var contacts = new List<Domain.Entities.Contact>() { contact };
+                var pageResult = new ContactPageResult<Domain.Entities.Contact>(contacts, 1, 10, 1);
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
                 var query = new SearchContactsQuery()

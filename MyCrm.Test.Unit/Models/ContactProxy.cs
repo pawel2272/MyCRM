@@ -26,6 +26,7 @@ namespace MyCrm.Test.Unit.Models
             this.ContactComment = contactComment;
             this.Orders = new List<Order>();
             this.Todos = new List<Todo>();
+            this.UserId = Guid.NewGuid();
         }
 
         public void AddOrder(string title,

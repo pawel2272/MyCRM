@@ -7,7 +7,7 @@ using MyCrm.Domain.Repositories;
 using NSubstitute;
 using Xunit;
 
-namespace MyCrm.Test.Unit
+namespace MyCrm.Test.Unit.Tests.Contact
 {
     public class GetContactQueryTest
     {

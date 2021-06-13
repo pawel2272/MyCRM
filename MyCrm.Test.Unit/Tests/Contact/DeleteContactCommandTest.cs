@@ -9,7 +9,7 @@ using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using Xunit;
 
-namespace MyCrm.Test.Unit
+namespace MyCrm.Test.Unit.Tests.Contact
 {
     public class DeleteContactCommandTest
     {
@@ -24,7 +24,7 @@ namespace MyCrm.Test.Unit
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(guid).Returns(new Contact());
+                unitOfWorkSubstitute.ContactsRepository.GetAsync(guid).Returns(new Domain.Entities.Contact());
 
                 var handler = new DeleteContactCommandHandler(unitOfWorkSubstitute);
 

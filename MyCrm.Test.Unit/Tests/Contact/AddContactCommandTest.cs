@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using MyCrm.Domain;
 using Xunit;
 
-namespace MyCrm.Test.Unit
+namespace MyCrm.Test.Unit.Tests.Contact
 {
     public class AddContactCommandTest
     {
