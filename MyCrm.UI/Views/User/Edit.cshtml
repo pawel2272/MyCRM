@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model EditUserCommand
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Edit user data
+            </div>
+            <div class="panel-body">
+                <form method="post" asp-controller="User" asp-action="Edit">
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.HiddenFor(m => m.RoleId)
+                    <div class="form-group">
+                        <label asp-for="FirstName">First Name</label>
+                        <input type="text" asp-for="FirstName" placeholder="First Name" name="firstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName">Last Name</label>
+                        <input type="text" asp-for="LastName" placeholder="Last Name" name="lastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select class="form-control" name="gender" asp-for="Gender">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone">Phone</label>
+                        <input type="text" asp-for="Phone" placeholder="Phone" name="phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email">E-mail</label>
+                        <input type="text" asp-for="Email" placeholder="E-mail" name="email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Street">Street</label>
+                        <input type="text" asp-for="Street" placeholder="Street" name="street" class="form-control" />
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostalCode">Postal Code</label>
+                        <input type="text" asp-for="PostalCode" placeholder="Postal Code" name="postalCode" class="form-control" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City">City</label>
+                        <input type="text" asp-for="City" placeholder="City" name="city" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="Password" name="password" class="form-control" asp-for="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default" value="Save" />
+                        <a class="btn btn-default" asp-controller="User" asp-action="Info">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>

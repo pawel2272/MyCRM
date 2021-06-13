@@ -11,7 +11,7 @@
         <div id="contacts">
             <table border="1" cellpadding="5" cellspacing="1" class="table table-bordered">
                 <tr>
-                    <th width="60" tyle="text-align: center">ID</th>
+                    <th width="60" tyle="text-align: center" class="hidden">ID</th>
                     <th>Name</th>
                     <th>Phone</th>
                     <th>E-mail</th>
@@ -24,7 +24,7 @@
                 @foreach (var contact in Model.Items)
                 {
                     <tr>
-                        <td style="text-align: center">@contact.Id</td>
+                        <td style="text-align: center" class="hidden">@contact.Id</td>
                         <td style="word-wrap: break-word;">@contact.FirstName @contact.LastName</td>
                         <td style="word-wrap: break-word;">@contact.Phone</td>
                         <td style="word-wrap: break-word;">@contact.Email</td>

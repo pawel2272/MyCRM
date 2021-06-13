@@ -27,18 +27,16 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label>
-                            Gender
-                            <select name="gender" asp-for="Gender">
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
-                            </select>
-                        </label>
+                        <label>Gender</label>
+                        <select class="form-control" name="gender" asp-for="Gender">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
                         <span asp-validation-for="Gender" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-default" value="Sign up" />
-                        <a asp-area="" asp-controller="Home" asp-action="Index">Cancel</a>
+                        <a class="btn btn-default" asp-controller="Home" asp-action="Index">Cancel</a>
                     </div>
                 </form>
             </div>

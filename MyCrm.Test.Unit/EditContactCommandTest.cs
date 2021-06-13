@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
+using MyCrm.Domain;
 using MyCrm.Domain.Command.Contact;
+using MyCrm.Domain.Entities;
 using MyCrm.Domain.Repositories;
 using NSubstitute;
-using System.Threading.Tasks;
-using MyCrm.Domain;
 using Xunit;
 
 namespace MyCrm.Test.Unit
 {
-    public class AddContactCommandTest
+    public class EditContactCommandTest
     {
         [Fact]
-        public async Task AddContact_WhenItIsPossible_ShouldSuccess()
+        public async Task EditContact_WhenItIsPossible_ShouldSuccess()
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new AddContactCommand()
+                var command = new EditContactCommand()
                 {
+                    Id = Guid.NewGuid(),
                     FirstName = "Jan",
                     LastName = "Kowalski",
                     Phone = "123456789",
@@ -33,9 +35,11 @@ namespace MyCrm.Test.Unit
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
+                unitOfWorkSubstitute.ContactsRepository.GetAsync(command.Id).Returns(new Contact());
+
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
 
-                var handler = new AddContactCommandHandler(unitOfWorkSubstitute, mapper);
+                var handler = new EditContactCommandHandler(unitOfWorkSubstitute, mapper);
 
                 var result = await handler.HandleAsync(command);
 
@@ -44,28 +48,19 @@ namespace MyCrm.Test.Unit
         }
 
         [Fact]
-        public async Task AddContact_WhenItIsPossible_ShouldFail()
+        public async Task EditContact_WhenItIsPossible_ShouldFail()
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new AddContactCommand()
-                {
-                    FirstName = "",
-                    LastName = "",
-                    Phone = "",
-                    Email = "",
-                    Street = "",
-                    PostalCode = "",
-                    City = "",
-                    ContactComment = "",
-                    UserId = Guid.Empty
-                };
+                var command = new EditContactCommand();
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
+                unitOfWorkSubstitute.ContactsRepository.GetAsync(command.Id).Returns(new Contact());
+
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
 
-                var handler = new AddContactCommandHandler(unitOfWorkSubstitute, mapper);
+                var handler = new EditContactCommandHandler(unitOfWorkSubstitute, mapper);
 
                 var result = await handler.HandleAsync(command);
 

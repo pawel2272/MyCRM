@@ -29,9 +29,10 @@ namespace MyCrm.UI.Controllers
             _logger = logger;
         }
 
-        public async Task<ActionResult> Show(GetContactQuery query)
+        public async Task<ActionResult> Show(Guid id)
         {
-            return View(query.Id);
+            var contact = await _mediator.QueryAsync(new GetContactQuery(id));
+            return View(contact);
         }
 
         public async Task<ActionResult> List(SearchContactsQuery query)
@@ -41,6 +42,8 @@ namespace MyCrm.UI.Controllers
                 var userId = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
                 query.UserId = userId;
             }
+
+            ViewBag.PageNumber = query.PageNumber;
 
             var contacts = await _mediator.QueryAsync(query);
             return View(contacts);

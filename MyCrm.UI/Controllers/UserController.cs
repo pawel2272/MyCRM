@@ -82,5 +82,31 @@ namespace MyCrm.UI.Controllers
             var user = await _mediator.QueryAsync(new GetUserQuery(userId));
             return View(user);
         }
+
+        [ServiceFilter(typeof(JwtAuthFilter))]
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult> Edit()
+        {
+            var userId = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var user = await _mediator.QueryAsync(new GetUserQuery(userId));
+            var command = _mapper.Map<EditUserCommand>(user);
+            return View(command);
+        }
+
+        [ServiceFilter(typeof(JwtAuthFilter))]
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> Edit(EditUserCommand command)
+        {
+            var result = await _mediator.CommandAsync(command);
+            if (result.IsFailure)
+            {
+                ModelState.PopulateValidation(result.Errors);
+                return View(command);
+            }
+
+            return RedirectToAction("Info", "User");
+        }
     }
 }

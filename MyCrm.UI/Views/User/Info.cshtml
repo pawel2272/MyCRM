@@ -6,8 +6,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Hello: @Model.Username</h3>
-<text>Username: <b>@Model.Username</b></text>
-<br />
-<text>Gender: @Model.Gender</text>
-<br />
+<div class="jumbotron">
+    <ul class="list-group">
+        <li class="list-group-item">Username <span class="badge">@Model.Username</span></li>
+        <li class="list-group-item">Gender <span class="badge">@Model.Gender</span></li>
+        <li class="list-group-item">First name <span class="badge">@Model.FirstName</span></li>
+        <li class="list-group-item">Last name <span class="badge">@Model.LastName</span></li>
+        <li class="list-group-item">Phone number <span class="badge">@Model.Phone</span></li>
+        <li class="list-group-item">Email address <span class="badge">@Model.Email</span></li>
+        <li class="list-group-item">Street <span class="badge">@Model.Street</span></li>
+        <li class="list-group-item">Postal code <span class="badge">@Model.PostalCode</span></li>
+        <li class="list-group-item">City <span class="badge">@Model.City</span></li>
+        <li class="list-group-item">Registration date <span class="badge">@Model.CreDate.ToString("G")</span></li>
+    </ul>
+    <div class="form-group">
+        <a class="btn btn-default" asp-controller="User" asp-action="Edit">Edit your data</a>
+    </div>
+</div>

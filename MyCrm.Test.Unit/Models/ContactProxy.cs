@@ -1,4 +1,5 @@
-﻿using MyCrm.Domain.Entities;
+﻿using System;
+using MyCrm.Domain.Entities;
 using System.Collections.Generic;
 
 namespace MyCrm.Test.Unit.Models
@@ -14,6 +15,7 @@ namespace MyCrm.Test.Unit.Models
             string city,
             string contactComment) : base()
         {
+            this.Id = Guid.NewGuid();
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Phone = phone;

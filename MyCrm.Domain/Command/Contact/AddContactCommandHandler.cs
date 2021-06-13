@@ -28,7 +28,7 @@ namespace MyCrm.Domain.Command.Contact
             var contact = _mapper.Map<Entities.Contact>(command);
 
             contact.CreDate = DateTime.Now;
-            contact.ModDate = DateTime.Now;;
+            contact.ModDate = DateTime.Now;
 
             await _unitOfWork.ContactsRepository.AddAsync(contact);
             await _unitOfWork.CommitAsync();
