@@ -23,5 +23,38 @@ namespace MyCrm.Test.Unit
 
             return contact;
         }
+
+        public Order CreateOrder()
+        {
+            var order = new OrderProxy("Test", "Content", 21.37m);
+            order.AddContact(CreateContact());
+            return order;
+        }
+
+        public Role CreateRole()
+        {
+            var role = new RoleProxy("Admin");
+
+            role.AddUser(CreateUser());
+
+            return role;
+        }
+
+        public Todo CreateTodo()
+        {
+            var todo = new TodoProxy("Test", "Content");
+            todo.AddContact(CreateContact());
+            return todo;
+        }
+
+        public User CreateUser()
+        {
+            var user = new UserProxy("admin", "M", "password", "Jan", "Kowalski", "123456789", "jan@kowalski.pl", "Miodowa 12", "00-000", "Warszawa");
+
+            user.AddRole("Admin");
+            user.AddContact(CreateContact());
+
+            return user;
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace MyCrm.Test.Unit.Models
 {
     public class TodoProxy : Todo
     {
-        public TodoProxy(string title, string content, decimal price)
+        public TodoProxy(string title, string content)
         {
             this.Id = Guid.NewGuid();
             this.Title = title;
