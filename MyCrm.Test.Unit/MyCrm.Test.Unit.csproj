@@ -19,11 +19,4 @@
     <ProjectReference Include="..\MyCrm.Infrastructure\MyCrm.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tests\User\" />
-    <Folder Include="Tests\Todo\" />
-    <Folder Include="Tests\Role\" />
-    <Folder Include="Tests\Order\" />
-  </ItemGroup>
-
 </Project>
