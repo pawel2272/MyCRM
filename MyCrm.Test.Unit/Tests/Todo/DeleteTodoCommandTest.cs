@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using MyCrm.Domain.Command.Contact;
+using MyCrm.Domain.Command.Todo;
 using MyCrm.Domain.Entities;
 using MyCrm.Domain.Repositories;
 using NSubstitute;
@@ -14,19 +14,19 @@ namespace MyCrm.Test.Unit.Tests.Todo
     public class DeleteTodoCommandTest
     {
         [Fact]
-        public async Task DeleteContact_WhenItIsPossible_ShouldSuccess()
+        public async Task DeleteTodo_WhenItIsPossible_ShouldSuccess()
         {
             using (var sut = new SystemUnderTest())
             {
                 Guid guid = Guid.NewGuid();
 
-                var command = new DeleteContactCommand(guid);
+                var command = new DeleteTodoCommand(guid);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(guid).Returns(new Domain.Entities.Contact());
+                unitOfWorkSubstitute.TodosRepository.GetAsync(guid).Returns(new Domain.Entities.Todo());
 
-                var handler = new DeleteContactCommandHandler(unitOfWorkSubstitute);
+                var handler = new DeleteTodoCommandHandler(unitOfWorkSubstitute);
 
                 var result = await handler.HandleAsync(command);
 
@@ -35,17 +35,17 @@ namespace MyCrm.Test.Unit.Tests.Todo
         }
 
         [Fact]
-        public async Task DeleteContact_WhenItIsPossible_ShouldFail()
+        public async Task DeleteTodo_WhenItIsPossible_ShouldFail()
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new DeleteContactCommand(Guid.Empty);
+                var command = new DeleteTodoCommand(Guid.Empty);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(Guid.Empty).ReturnsNull();
+                unitOfWorkSubstitute.TodosRepository.GetAsync(Guid.Empty).ReturnsNull();
 
-                var handler = new DeleteContactCommandHandler(unitOfWorkSubstitute);
+                var handler = new DeleteTodoCommandHandler(unitOfWorkSubstitute);
 
                 var result = await handler.HandleAsync(command);
 
@@ -53,7 +53,7 @@ namespace MyCrm.Test.Unit.Tests.Todo
 
                 result.Errors.Count().Should().Be(0);
 
-                result.Message.Should().Be("Contact does not exist.");
+                result.Message.Should().Be("Todo does not exist.");
             }
         }
     }

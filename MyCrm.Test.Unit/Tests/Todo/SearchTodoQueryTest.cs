@@ -5,7 +5,7 @@ using FluentAssertions;
 using MyCrm.Domain;
 using MyCrm.Domain.Entities;
 using MyCrm.Domain.Enums;
-using MyCrm.Domain.Query.Contact;
+using MyCrm.Domain.Query.Todo;
 using MyCrm.Domain.Query.Dto.Pagination.PageResults;
 using MyCrm.Domain.Repositories;
 using NSubstitute;
@@ -16,37 +16,37 @@ namespace MyCrm.Test.Unit.Tests.Todo
     public class SearchTodoQueryTest
     {
         [Fact]
-        public async Task SearchContact_WhenItExists_ReturnCorrectData()
+        public async Task SearchTodo_WhenItExists_ReturnCorrectData()
         {
             using (var sut = new SystemUnderTest())
             {
-                var contact = sut.CreateContact();
-                var contacts = new List<Domain.Entities.Contact>() { contact };
-                var pageResult = new ContactPageResult<Domain.Entities.Contact>(contacts, 1, 10, 1);
+                var todo = sut.CreateTodo();
+                var todos = new List<Domain.Entities.Todo>() { todo };
+                var pageResult = new TodoPageResult<Domain.Entities.Todo>(todos, 1, 10, 1, todo.ContactId);
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                var query = new SearchContactsQuery()
+                var query = new SearchTodosQuery()
                 {
-                    UserId = contact.UserId,
-                    SearchPhrase = contact.FirstName,
+                    ContactId = todo.ContactId,
+                    SearchPhrase = todo.Title,
                     PageNumber = 1,
                     PageSize = 10,
-                    OrderBy = "FirstName",
+                    OrderBy = "Title",
                     SortDirection = SortDirection.DESC
                 };
 
                 unitOfWorkSubstitute
-                    .ContactsRepository
-                    .SearchAsync(query.UserId, query.SearchPhrase, query.PageNumber, query.PageSize, query.OrderBy, query.SortDirection)
+                    .TodosRepository
+                    .SearchAsync(query.ContactId, query.SearchPhrase, query.PageNumber, query.PageSize, query.OrderBy, query.SortDirection)
                     .Returns(pageResult);
 
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
-                var handler = new SearchContactsQueryHandler(unitOfWorkSubstitute, mapper);
-                var contactQuery = await handler.HandleAsync(query);
+                var handler = new SearchTodosQueryHandler(unitOfWorkSubstitute, mapper);
+                var todoQuery = await handler.HandleAsync(query);
 
-                foreach (var cntct in contactQuery.Items)
+                foreach (var tod in todoQuery.Items)
                 {
-                    cntct.Id.Should().Be(contact.Id);
+                    tod.Id.Should().Be(todo.Id);
                 }
             }
         }
