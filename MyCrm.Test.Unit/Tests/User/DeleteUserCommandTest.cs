@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using MyCrm.Domain.Command.Contact;
+using MyCrm.Domain.Command.User;
 using MyCrm.Domain.Entities;
 using MyCrm.Domain.Repositories;
 using NSubstitute;
@@ -14,19 +14,19 @@ namespace MyCrm.Test.Unit.Tests.User
     public class DeleteUserCommandTest
     {
         [Fact]
-        public async Task DeleteContact_WhenItIsPossible_ShouldSuccess()
+        public async Task DeleteUser_WhenItIsPossible_ShouldSuccess()
         {
             using (var sut = new SystemUnderTest())
             {
                 Guid guid = Guid.NewGuid();
 
-                var command = new DeleteContactCommand(guid);
+                var command = new DeleteUserCommand(guid);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(guid).Returns(new Domain.Entities.Contact());
+                unitOfWorkSubstitute.UsersRepository.GetAsync(guid).Returns(new Domain.Entities.User());
 
-                var handler = new DeleteContactCommandHandler(unitOfWorkSubstitute);
+                var handler = new DeleteUserCommandHandler(unitOfWorkSubstitute);
 
                 var result = await handler.HandleAsync(command);
 
@@ -35,17 +35,17 @@ namespace MyCrm.Test.Unit.Tests.User
         }
 
         [Fact]
-        public async Task DeleteContact_WhenItIsPossible_ShouldFail()
+        public async Task DeleteUser_WhenItIsPossible_ShouldFail()
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new DeleteContactCommand(Guid.Empty);
+                var command = new DeleteUserCommand(Guid.Empty);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(Guid.Empty).ReturnsNull();
+                unitOfWorkSubstitute.UsersRepository.GetAsync(Guid.Empty).ReturnsNull();
 
-                var handler = new DeleteContactCommandHandler(unitOfWorkSubstitute);
+                var handler = new DeleteUserCommandHandler(unitOfWorkSubstitute);
 
                 var result = await handler.HandleAsync(command);
 
@@ -53,7 +53,7 @@ namespace MyCrm.Test.Unit.Tests.User
 
                 result.Errors.Count().Should().Be(0);
 
-                result.Message.Should().Be("Contact does not exist.");
+                result.Message.Should().Be("User does not exist.");
             }
         }
     }

@@ -2,7 +2,7 @@
 using AutoMapper;
 using FluentAssertions;
 using MyCrm.Domain;
-using MyCrm.Domain.Query.Contact;
+using MyCrm.Domain.Query.User;
 using MyCrm.Domain.Repositories;
 using NSubstitute;
 using Xunit;
@@ -12,21 +12,21 @@ namespace MyCrm.Test.Unit.Tests.User
     public class GetUserQueryTest
     {
         [Fact]
-        public async Task GetContact_WhenItExists_ReturnCorrectData()
+        public async Task GetUser_WhenItExists_ReturnCorrectData()
         {
             using (var sut = new SystemUnderTest())
             {
-                var contact = sut.CreateContact();
+                var User = sut.CreateUser();
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(contact.Id).Returns(contact);
+                unitOfWorkSubstitute.UsersRepository.GetAsync(User.Id).Returns(User);
 
-                var query = new GetContactQuery(contact.Id);
+                var query = new GetUserQuery(User.Id);
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
-                var handler = new GetContactQueryHandler(unitOfWorkSubstitute, mapper);
-                var contactQuery = await handler.HandleAsync(query);
+                var handler = new GetUserQueryHandler(unitOfWorkSubstitute, mapper);
+                var UserQuery = await handler.HandleAsync(query);
 
-                contactQuery.Id.Should().Be(contact.Id);
+                UserQuery.Id.Should().Be(User.Id);
             }
         }
     }
