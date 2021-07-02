@@ -7,6 +7,7 @@ using MyCrm.Domain.Repositories;
 using NSubstitute;
 using System.Threading.Tasks;
 using MyCrm.Domain;
+using MyCrm.Domain.Command.Role;
 using Xunit;
 
 namespace MyCrm.Test.Unit.Tests.Role
@@ -14,28 +15,20 @@ namespace MyCrm.Test.Unit.Tests.Role
     public class AddRoleCommandTest
     {
         [Fact]
-        public async Task AddContact_WhenItIsPossible_ShouldSuccess()
+        public async Task AddRole_WhenItIsPossible_ShouldSuccess()
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new AddContactCommand()
+                var command = new AddRoleCommand()
                 {
-                    FirstName = "Jan",
-                    LastName = "Kowalski",
-                    Phone = "123456789",
-                    Email = "jan@kowalski.pl",
-                    Street = "Miodowa 12",
-                    PostalCode = "00-000",
-                    City = "Warszawa",
-                    ContactComment = "Sample comment",
-                    UserId = Guid.NewGuid()
+                    Name = "Sample"
                 };
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
 
-                var handler = new AddContactCommandHandler(unitOfWorkSubstitute, mapper);
+                var handler = new AddRoleCommandHandler(unitOfWorkSubstitute, mapper);
 
                 var result = await handler.HandleAsync(command);
 
@@ -44,34 +37,26 @@ namespace MyCrm.Test.Unit.Tests.Role
         }
 
         [Fact]
-        public async Task AddContact_WhenItIsPossible_ShouldFail()
+        public async Task AddRole_WhenItIsPossible_ShouldFail()
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new AddContactCommand()
+                var command = new AddRoleCommand()
                 {
-                    FirstName = "",
-                    LastName = "",
-                    Phone = "",
-                    Email = "",
-                    Street = "",
-                    PostalCode = "",
-                    City = "",
-                    ContactComment = "",
-                    UserId = Guid.Empty
+                    Name = ""
                 };
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
 
-                var handler = new AddContactCommandHandler(unitOfWorkSubstitute, mapper);
+                var handler = new AddRoleCommandHandler(unitOfWorkSubstitute, mapper);
 
                 var result = await handler.HandleAsync(command);
 
                 result.IsSuccess.Should().Be(false);
 
-                result.Errors.Count().Should().Be(9);
+                result.Errors.Count().Should().Be(1);
             }
         }
     }

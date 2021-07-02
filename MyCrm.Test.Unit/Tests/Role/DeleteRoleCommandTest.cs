@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using MyCrm.Domain.Command.Contact;
+using MyCrm.Domain.Command.Role;
 using MyCrm.Domain.Entities;
 using MyCrm.Domain.Repositories;
 using NSubstitute;
@@ -14,19 +15,19 @@ namespace MyCrm.Test.Unit.Tests.Role
     public class DeleteRoleCommandTest
     {
         [Fact]
-        public async Task DeleteContact_WhenItIsPossible_ShouldSuccess()
+        public async Task DeleteRole_WhenItIsPossible_ShouldSuccess()
         {
             using (var sut = new SystemUnderTest())
             {
                 Guid guid = Guid.NewGuid();
 
-                var command = new DeleteContactCommand(guid);
+                var command = new DeleteRoleCommand(guid);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(guid).Returns(new Domain.Entities.Contact());
+                unitOfWorkSubstitute.RolesRepository.GetAsync(guid).Returns(new Domain.Entities.Role());
 
-                var handler = new DeleteContactCommandHandler(unitOfWorkSubstitute);
+                var handler = new DeleteRoleCommandHandler(unitOfWorkSubstitute);
 
                 var result = await handler.HandleAsync(command);
 
@@ -35,17 +36,17 @@ namespace MyCrm.Test.Unit.Tests.Role
         }
 
         [Fact]
-        public async Task DeleteContact_WhenItIsPossible_ShouldFail()
+        public async Task DeleteRole_WhenItIsPossible_ShouldFail()
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new DeleteContactCommand(Guid.Empty);
+                var command = new DeleteRoleCommand(Guid.Empty);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ContactsRepository.GetAsync(Guid.Empty).ReturnsNull();
+                unitOfWorkSubstitute.RolesRepository.GetAsync(Guid.Empty).ReturnsNull();
 
-                var handler = new DeleteContactCommandHandler(unitOfWorkSubstitute);
+                var handler = new DeleteRoleCommandHandler(unitOfWorkSubstitute);
 
                 var result = await handler.HandleAsync(command);
 
@@ -53,7 +54,7 @@ namespace MyCrm.Test.Unit.Tests.Role
 
                 result.Errors.Count().Should().Be(0);
 
-                result.Message.Should().Be("Contact does not exist.");
+                result.Message.Should().Be("Role does not exist.");
             }
         }
     }

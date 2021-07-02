@@ -62,7 +62,7 @@ namespace MyCrm.Test.Unit.Tests.Order
 
                 result.IsSuccess.Should().Be(false);
 
-                result.Errors.Count().Should().Be(4);
+                result.Errors.Count().Should().Be(3);
             }
         }
     }
