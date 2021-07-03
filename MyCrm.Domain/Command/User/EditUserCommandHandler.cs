@@ -30,6 +30,8 @@ namespace MyCrm.Domain.Command.User
                 return Result.Fail("User does not exist.");
             }
 
+            _mapper.Map(command, user);
+
             await _unitOfWork.UsersRepository.UpdateAsync(user);
             user.ModDate = DateTime.Now;
             await _unitOfWork.CommitAsync();

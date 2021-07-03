@@ -102,6 +102,7 @@ namespace MyCrm.Infrastructure.Repositories
 
         public async Task UpdateAsync(User user)
         {
+            user.Password = _hasher.HashPassword(user, user.Password);
             _dbContext.Users.Update(user);
         }
 
