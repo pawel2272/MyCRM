@@ -4,11 +4,18 @@ namespace MyCrm.Domain.Command.Todo
 {
     public sealed class DeleteTodoCommand : ICommand
     {
-        public DeleteTodoCommand(Guid id)
+        public DeleteTodoCommand()
         {
+            
+        }
+
+        public DeleteTodoCommand(Guid id, Guid contactId)
+        {
+            ContactId = contactId;
             Id = id;
         }
 
-        public Guid Id { get; }
+        public Guid ContactId { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -97,6 +97,7 @@ namespace MyCrm.Infrastructure.Repositories
 
         public async Task AddAsync(User user)
         {
+            user.Password = _hasher.HashPassword(user, user.Password);
             await _dbContext.Users.AddAsync(user);
         }
 

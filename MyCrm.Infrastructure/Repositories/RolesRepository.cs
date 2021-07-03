@@ -3,7 +3,11 @@ using MyCrm.Domain.Enums;
 using MyCrm.Domain.Query.Dto.Pagination.PageResults;
 using MyCrm.Domain.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyCrm.Infrastructure.Repositories
 {
@@ -18,27 +22,45 @@ namespace MyCrm.Infrastructure.Repositories
 
         public async Task AddAsync(Role role)
         {
-            throw new NotImplementedException();
+            await _dbContext.Roles.AddAsync(role);
         }
 
         public async Task DeleteAsync(Role role)
         {
-            throw new NotImplementedException();
+            _dbContext.Roles.Remove(role);
         }
 
         public async Task<Role> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == id);
+            return role;
         }
 
         public async Task<RolePageResult<Role>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
         {
-            throw new NotImplementedException();
+            var baseQuery = _dbContext.Roles
+                .Where(r => searchPhrase == null ||
+                                r.Name.ToLower().Contains(searchPhrase.ToLower()));
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                var columnSelectors = new Dictionary<string, Expression<Func<Role, object>>>()
+                {
+                    { nameof(Role.Name), r => r.Name },
+                };
+
+                var selectedColumn = columnSelectors[orderBy];
+
+                baseQuery = sortDirection == SortDirection.ASC ? baseQuery.OrderBy(selectedColumn) : baseQuery.OrderByDescending(selectedColumn);
+            }
+            var orders = await baseQuery.Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+            return new RolePageResult<Role>(orders, baseQuery.Count(), pageSize, pageNumber);
         }
 
         public async Task UpdateAsync(Role role)
         {
-            throw new NotImplementedException();
+            _dbContext.Roles.Update(role);
         }
     }
 }

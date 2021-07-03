@@ -23,7 +23,7 @@
                     <a class="btn btn-default btn-sm" asp-controller="Todo" asp-action="Edit" asp-route-id="@todo.Id">Edit</a>
                 </td>
                 <td>
-                    <a class="btn btn-danger btn-sm" asp-controller="Todo" asp-action="Delete" asp-route-id="@todo.Id">Delete</a>
+                    <a class="btn btn-danger btn-sm" asp-controller="Todo" asp-action="Delete" asp-route-id="@todo.Id" asp-route-contactId="@todo.ContactId">Delete</a>
                 </td>
             </tr>
         }

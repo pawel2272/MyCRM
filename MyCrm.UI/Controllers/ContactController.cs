@@ -32,6 +32,7 @@ namespace MyCrm.UI.Controllers
         public async Task<ActionResult> Show(Guid id)
         {
             var contact = await _mediator.QueryAsync(new GetContactQuery(id));
+            ViewData["contactId"] = id;
             return View(contact);
         }
 
@@ -57,6 +58,11 @@ namespace MyCrm.UI.Controllers
         [HttpPost]
         public async Task<ActionResult> Add(AddContactCommand command)
         {
+            if (command.UserId.Equals(Guid.Empty))
+            {
+                var userId = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                command.UserId = userId;
+            }
             var result = await _mediator.CommandAsync(command);
             if (result.IsFailure)
             {
@@ -64,10 +70,9 @@ namespace MyCrm.UI.Controllers
                 return View(command);
             }
 
-            return RedirectToAction("List");
+            return RedirectToAction("List", new { PageNumber = 1, PageSize = 10, OrderBy = "FirstName"});
         }
 
-        [HttpPost]
         public async Task<ActionResult> Delete(Guid id)
         {
             var result = await _mediator.CommandAsync(new DeleteContactCommand(id));
@@ -76,7 +81,7 @@ namespace MyCrm.UI.Controllers
                 ModelState.PopulateValidation(result.Errors);
             }
 
-            return RedirectToAction("List");
+            return RedirectToAction("List", new { PageNumber = 1, PageSize = 10, OrderBy = "FirstName"});
         }
 
         public async Task<ActionResult> Edit(Guid id)
@@ -97,7 +102,7 @@ namespace MyCrm.UI.Controllers
                 return View(command);
             }
 
-            return RedirectToAction("List");
+            return RedirectToAction("List", new { PageNumber = 1, PageSize = 10, OrderBy = "FirstName"});
         }
     }
 }

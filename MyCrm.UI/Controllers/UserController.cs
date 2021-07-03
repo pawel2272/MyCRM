@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MyCrm.Domain;
 using MyCrm.Domain.Command.User;
+using MyCrm.Domain.Enums;
+using MyCrm.Domain.Query.Role;
 using MyCrm.Domain.Query.User;
 using MyCrm.Infrastructure;
 using MyCrm.UI.Filters;
@@ -63,7 +65,19 @@ namespace MyCrm.UI.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(AddUserCommand command)
         {
+            var role = await _mediator.QueryAsync(new SearchRolesQuery()
+            {
+                SearchPhrase = "Admin",
+                PageNumber = 1,
+                PageSize = 10,
+                OrderBy = "Name",
+                SortDirection = SortDirection.DESC
+            });
+
+            command.RoleId = role.Items.FirstOrDefault(r => r != null).Id;
+
             var result = await _mediator.CommandAsync(command);
+
             if (result.IsFailure)
             {
                 ModelState.PopulateValidation(result.Errors);

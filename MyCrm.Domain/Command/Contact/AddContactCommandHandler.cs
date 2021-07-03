@@ -26,6 +26,7 @@ namespace MyCrm.Domain.Command.Contact
             }
 
             var contact = _mapper.Map<Entities.Contact>(command);
+            contact.Id = Guid.NewGuid();
 
             contact.CreDate = DateTime.Now;
             contact.ModDate = DateTime.Now;

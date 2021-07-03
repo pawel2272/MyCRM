@@ -1,5 +1,5 @@
 ﻿
-@model OrderDto
+@model EditOrderCommand
 
 @{
     ViewBag.Title = "EditOrder";
@@ -27,6 +27,11 @@
                         <label>Content</label>
                         <textarea placeholder="Content.." name="content" class="form-control" asp-for="Content"></textarea>
                         <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" placeholder="Price" name="price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-default" value="Save" />

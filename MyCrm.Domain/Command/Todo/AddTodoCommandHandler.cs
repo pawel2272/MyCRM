@@ -26,6 +26,7 @@ namespace MyCrm.Domain.Command.Todo
             }
 
             var todo = _mapper.Map<Entities.Todo>(command);
+            todo.Id = Guid.NewGuid();
             todo.CreDate = DateTime.Now;
             todo.ModDate = DateTime.Now;
             await _unitOfWork.TodosRepository.AddAsync(todo);

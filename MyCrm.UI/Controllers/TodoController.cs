@@ -30,13 +30,17 @@ namespace MyCrm.UI.Controllers
             _logger = logger;
         }
 
-        public ActionResult Add()
+        public ActionResult Add(Guid contactId)
         {
-            return View();
+            var command = new AddTodoCommand()
+            {
+                ContactId = contactId
+            };
+            return View(command);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(AddOrderCommand command)
+        public async Task<ActionResult> Add(AddTodoCommand command)
         {
             var result = await _mediator.CommandAsync(command);
             if (result.IsFailure)
@@ -48,7 +52,6 @@ namespace MyCrm.UI.Controllers
             return RedirectToAction("Show", "Contact", new { id = command.ContactId });
         }
 
-        [HttpPost]
         public async Task<ActionResult> Delete(DeleteTodoCommand command)
         {
             var result = await _mediator.CommandAsync(command);
@@ -57,7 +60,7 @@ namespace MyCrm.UI.Controllers
                 ModelState.PopulateValidation(result.Errors);
             }
 
-            return RedirectToAction("Show", "Contact");
+            return RedirectToAction("Show", "Contact", new { id = command.ContactId });
         }
 
         public async Task<ActionResult> Edit(Guid id)
@@ -68,6 +71,7 @@ namespace MyCrm.UI.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public async Task<ActionResult> Edit(EditTodoCommand command)
         {
             var result = await _mediator.CommandAsync(command);
@@ -77,7 +81,7 @@ namespace MyCrm.UI.Controllers
                 return View(command);
             }
 
-            return RedirectToAction("Show", "Contact");
+            return RedirectToAction("Show", "Contact", new { id = command.ContactId });
         }
     }
 }

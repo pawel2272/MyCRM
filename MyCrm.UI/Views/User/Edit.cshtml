@@ -18,6 +18,7 @@
                 <form method="post" asp-controller="User" asp-action="Edit">
                     @Html.HiddenFor(m => m.Id)
                     @Html.HiddenFor(m => m.RoleId)
+                    @Html.HiddenFor(m => m.Username)
                     <div class="form-group">
                         <label asp-for="FirstName">First Name</label>
                         <input type="text" asp-for="FirstName" placeholder="First Name" name="firstName" class="form-control" />

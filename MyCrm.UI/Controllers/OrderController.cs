@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using AutoMapper;
 using MyCrm.Domain;
+using MyCrm.Domain.Command.Contact;
 using MyCrm.Domain.Command.Order;
 using MyCrm.Domain.Query.Order;
 using MyCrm.Infrastructure;
@@ -27,9 +28,13 @@ namespace MyCrm.UI.Controllers
             _logger = logger;
         }
 
-        public ActionResult Add()
+        public ActionResult Add(Guid contactId)
         {
-            return View();
+            var command = new AddOrderCommand()
+            {
+                ContactId = contactId
+            };
+            return View(command);
         }
 
         [HttpPost]
@@ -45,7 +50,6 @@ namespace MyCrm.UI.Controllers
             return RedirectToAction("Show", "Contact", new { id = command.ContactId });
         }
 
-        [HttpPost]
         public async Task<ActionResult> Delete(DeleteOrderCommand command)
         {
             var result = await _mediator.CommandAsync(command);
@@ -54,7 +58,7 @@ namespace MyCrm.UI.Controllers
                 ModelState.PopulateValidation(result.Errors);
             }
 
-            return RedirectToAction("Show", "Contact");
+            return RedirectToAction("Show", "Contact", new { id = command.ContactId });
         }
 
         public async Task<ActionResult> Edit(Guid id)
@@ -75,7 +79,7 @@ namespace MyCrm.UI.Controllers
                 return View(command);
             }
 
-            return RedirectToAction("Show", "Contact");
+            return RedirectToAction("Show", "Contact", new { id = command.ContactId });
         }
     }
 }

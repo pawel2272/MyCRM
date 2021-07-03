@@ -4,11 +4,18 @@ namespace MyCrm.Domain.Command.Order
 {
     public class DeleteOrderCommand : ICommand
     {
-        public DeleteOrderCommand(Guid id)
+        public DeleteOrderCommand()
         {
+            
+        }
+
+        public DeleteOrderCommand(Guid id, Guid contactId)
+        {
+            ContactId = contactId;
             Id = id;
         }
 
-        public Guid Id { get; }
+        public Guid ContactId { get; set; }
+        public Guid Id { get; set; }
     }
 }

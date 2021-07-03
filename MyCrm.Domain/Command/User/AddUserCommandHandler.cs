@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using MyCrm.Domain.Repositories;
 
 namespace MyCrm.Domain.Command.User
@@ -26,6 +27,7 @@ namespace MyCrm.Domain.Command.User
             }
 
             var user = _mapper.Map<Entities.User>(command);
+            user.Id = Guid.NewGuid();
             user.CreDate = DateTime.Now;
             user.ModDate = DateTime.Now;
             await _unitOfWork.UsersRepository.AddAsync(user);
