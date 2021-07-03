@@ -20,7 +20,7 @@ namespace MyCrm.Test.Unit.Tests.Todo
             {
                 Guid guid = Guid.NewGuid();
 
-                var command = new DeleteTodoCommand(guid);
+                var command = new DeleteTodoCommand(guid, guid);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
@@ -39,7 +39,7 @@ namespace MyCrm.Test.Unit.Tests.Todo
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new DeleteTodoCommand(Guid.Empty);
+                var command = new DeleteTodoCommand(Guid.Empty, Guid.Empty);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 

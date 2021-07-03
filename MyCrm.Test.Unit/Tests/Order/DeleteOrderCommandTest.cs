@@ -21,7 +21,7 @@ namespace MyCrm.Test.Unit.Tests.Order
             {
                 Guid guid = Guid.NewGuid();
 
-                var command = new DeleteOrderCommand(guid);
+                var command = new DeleteOrderCommand(guid, guid);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
@@ -40,7 +40,7 @@ namespace MyCrm.Test.Unit.Tests.Order
         {
             using (var sut = new SystemUnderTest())
             {
-                var command = new DeleteOrderCommand(Guid.Empty);
+                var command = new DeleteOrderCommand(Guid.Empty, Guid.Empty);
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
